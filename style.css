@@ -1,0 +1,65 @@
+*{
+  margin: 0;
+}
+
+body{
+  width: 800px;
+  margin: 0  auto 0 auto;
+}
+textarea{
+  height: 120px;
+  width: 710px;
+}
+
+#keybord{
+  padding-top: 6px;
+  padding-right: 6px;
+  background-color: #A9A9A9;
+  border: 3px solid black;
+  border-radius: 3px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 704px;
+}
+.regular-key,.irregular{
+  margin-bottom: 8px;
+  margin-left: 6px;
+  width: 40px;
+  height: 40px;
+  background-color: #f06c64;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 25px;
+  line-height: 40px;
+  text-align: center;
+  cursor: pointer;
+}
+.irregular{
+   background-color: black;
+   font-size: 1.4em;
+ }
+.irregular:hover{
+  background-color: #2d303a;
+  color: #f06c64;
+}
+.regular-key:hover{
+  background-color: #2d303a;
+  color: #f06c64;
+}
+
+.back,
+.caps,
+.shift{ width: 100px }
+
+.tab{ width: 50px }
+
+
+.shiftR-enter{ width:86px }
+
+.space{ width: 330px }
+
+.-focus{
+  background-color: blue;
+  border-radius: 20px;
+  transition: 0.1s;
+}

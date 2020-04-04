@@ -14,38 +14,24 @@ const CODE =["Backquote", "Digit1", "Digit2", "Digit3", "Digit4", "Digit5", "Dig
   keybord.insertAdjacentHTML('beforeend',   '<div class="caps irregular"></div><div class="regular-key"></div><div class="regular-key"></div><div class="regular-key"></div><div class="regular-key"></div><div class="regular-key"></div><div class="regular-key"></div><div class="regular-key"></div><div class="regular-key"></div><div class="regular-key"></div><div class="regular-key"></div><div class="regular-key"></div><div class="shiftR-enter irregular"></div>');
   keybord.insertAdjacentHTML('beforeend' , '<div class="shift irregular"></div><div class="regular-key"></div><div class="regular-key"></div><div class="regular-key"></div><div class="regular-key"></div><div class="regular-key"></div><div class="regular-key"></div><div class="regular-key"></div><div class="regular-key"></div><div class="regular-key"></div><div class="regular-key"></div><div class="regular-key"></div><div class="shiftR-enter irregular"><div>');
   keybord.insertAdjacentHTML('beforeend', '<div class="irregular"></div><div class="irregular"></div><div class="alt irregular"></div><div class="space irregular"></div><div class="irregular" id="altRight"></div><div class="regular-key"></div><div class="regular-key"></div><div class="regular-key"></div><div class="irregular"></div>');
-  // document.querySelector('.tab').setAttribute('id' , 'tab');
-  // document.querySelector('.caps').setAttribute('id' , 'capsLock');
-  // document.querySelector('.shift').setAttribute('id' , 'shift');
-  // document.querySelector('.space').setAttribute('id' , 'space');
-  // document.querySelector('.enter').setAttribute('id' , 'enter');
-  // document.querySelector('.alt').setAttribute('id' , 'alt');
 })();
 const KEY_IRREGULAR = document.querySelectorAll('.irregular');
 const KEY_REGULAR = document.querySelectorAll('.regular-key');
 const TEXTAREA  = document.getElementById('textarea');
+let stateOfCaps = false;
 
 (function () {
   let i = 0;
+  let j = 0;
+  let n = 0;
   document.querySelectorAll('#keybord > div').forEach((item) => {
     item.setAttribute('code', CODE[i++])
   });
-})();
-
-
-
-(function () {
-  let i = 0;
   KEY_REGULAR.forEach((item) => {
-    item.setAttribute('data', KEY_CODE_REGULAR[i++])
+    item.setAttribute('data', KEY_CODE_REGULAR[n++])
   });
-})();
-
-
-(function () {
-  let i = 0;
   KEY_IRREGULAR.forEach((item) => {
-    item.insertAdjacentText('afterbegin', IRREGULAR_KEYS[i++])
+    item.insertAdjacentText('afterbegin', IRREGULAR_KEYS[j++])
   });
 })();
 
@@ -61,6 +47,26 @@ function changeSymbols(array) {
 }
 changeSymbols(ENGLISH_KEYS);
 
+function changeRegister(state/*, array*/) {
+  let i =0;
+  if (!state) {
+    KEY_REGULAR.forEach((item) =>{
+      item.innerText = '';
+    })
+    KEY_REGULAR.forEach((item) => {
+      item.insertAdjacentText('afterbegin', ENGLISH_KEYS[i++].toUpperCase())
+      stateOfCaps = true;
+    });
+  }else if (state) {
+    KEY_REGULAR.forEach((item) =>{
+      item.innerText = '';
+    })
+    KEY_REGULAR.forEach((item) => {
+      item.insertAdjacentText('afterbegin', ENGLISH_KEYS[i++])
+    });
+    stateOfCaps = false;
+  }
+}
 
 document.addEventListener('keydown', function (event) {
   document.querySelector('[code="'+event.code+'"]').classList.add('-focus');
@@ -69,12 +75,6 @@ document.addEventListener('keyup', function (event) {
   document.querySelector('[code="'+event.code+'"]').classList.remove('-focus');
 })
 
-
-
-// document.onkeypress = function (event) {
-//    event.preventDefault();
-//
-// }
 
 
 
@@ -119,16 +119,9 @@ document.onkeydown = function (event) {
        TEXTAREA.value += ' ';
        break;
       case 'CapsLock':
-      // let i =0;
-      //   ENGLISH_KEYS.forEach(item => {
-      //     KEY_REGULAR.innerText = '';
-      //     KEY_REGULAR.innerText = item[i++].toUpperCase()
-      //   });
-      //   break;
+      changeRegister(stateOfCaps);
+        break;
      default:
      TEXTAREA.value += document.querySelector('[data="'+event.keyCode+'"]').innerText;
    }
-
-
-
 }

@@ -110,7 +110,6 @@ document.addEventListener("keydown", (event) => {
   if (event) {
     CODE.forEach((item) => { item !== event.code ? null : document.querySelector(`[code="${event.code}"]`).classList.add("-focus"); });
   }
-
   if (event.code === "AltLeft") {
     if (event.ctrlKey) {
       if (localStorage.lang === JSON.stringify(RUSSIAN_KEYS)) {
@@ -139,9 +138,6 @@ document.addEventListener("keyup", (event) => {
 
 
 document.addEventListener("keydown", (event) => {
-  if (event) {
-    CODE.forEach((item) => { item !== event.code ? null : document.querySelector(`[code="${event.code}"]`).classList.remove("-focus"); });
-  }
   const arrayOfSymbols = document.getElementById("textarea").value.split("");
   event.preventDefault();
   if (event) {

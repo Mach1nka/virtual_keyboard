@@ -52,6 +52,7 @@ const CODE = ["Backquote", "Digit1", "Digit2", "Digit3", "Digit4", "Digit5", "Di
   keybord.insertAdjacentHTML("afterend", "<p class = \"description\">Made with Windows</p>");
 }());
 
+
 const KEY_IRREGULAR = document.querySelectorAll(".irregular");
 const KEY_REGULAR = document.querySelectorAll(".regular-key");
 const TEXTAREA = document.getElementById("textarea");
@@ -138,6 +139,9 @@ document.addEventListener("keyup", (event) => {
 
 
 document.addEventListener("keydown", (event) => {
+  if (event) {
+    CODE.forEach((item) => { item !== event.code ? null : document.querySelector(`[code="${event.code}"]`).classList.remove("-focus"); });
+  }
   const arrayOfSymbols = document.getElementById("textarea").value.split("");
   event.preventDefault();
   if (event) {
@@ -193,8 +197,9 @@ document.addEventListener("keydown", (event) => {
 
 
 document.getElementById("keybord").addEventListener("mousedown", (event) => {
+  event.target.classList.add("-focus");
   const arrayOfSymbols = document.getElementById("textarea").value.split("");
-  if (event.target.getAttribute("data") == null && event.target.getAttribute("code") == null) {
+  if (event.target.getAttribute("code") == null) {
     return null;
   }
   switch (event.target.getAttribute("code")) {
@@ -242,6 +247,7 @@ document.getElementById("keybord").addEventListener("mousedown", (event) => {
 });
 
 document.getElementById("keybord").onmouseup = function (event) {
+  event.target.classList.remove("-focus");
   if (event.target.getAttribute("code") === "ShiftRight" || event.target.getAttribute("code") === "ShiftLeft") {
     changeSymbols(JSON.parse(localStorage.getItem("lang")));
   }

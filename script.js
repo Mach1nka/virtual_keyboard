@@ -8,13 +8,48 @@ const CODE = ["Backquote", "Digit1", "Digit2", "Digit3", "Digit4", "Digit5", "Di
 (function () {
   document.querySelector("body").insertAdjacentHTML("beforeend", "<textarea name=\"name\" id=\"textarea\"></textarea> <div id=\"keybord\"></div>");
   const keybord = document.querySelector("#keybord");
-  keybord.insertAdjacentHTML("beforeend", "<div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"back irregular\"></div>");
-  keybord.insertAdjacentHTML("beforeend", "<div class=\"tab irregular\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"irregular\"></div>");
-  keybord.insertAdjacentHTML("beforeend", "<div class=\"caps irregular\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"shiftR-enter irregular\"></div>");
-  keybord.insertAdjacentHTML("beforeend", "<div class=\"shift irregular\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"shiftR-enter irregular\"><div>");
-  keybord.insertAdjacentHTML("beforeend", "<div class=\"irregular\"></div><div class=\"irregular\"></div><div class=\"alt irregular\"></div><div class=\"space irregular\"></div><div class=\"irregular\" id=\"altRight\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"regular-key\"></div><div class=\"irregular\"></div>");
-  keybord.insertAdjacentHTML("beforebegin", "<p class = 'description'>Switch Language : Ctrl + Alt</p>");
-  keybord.insertAdjacentHTML("afterend", "<p class = 'description'>Made with Windows</p>");
+  for (let i = 0; i < 64; i++) {
+    keybord.insertAdjacentHTML("beforeend", "<div></div>");
+    keybord.childNodes.forEach((item, n = 0) => {
+      n++;
+      switch (n) {
+        case 14:
+          item.classList.add("back", "irregular");
+          break;
+        case 15:
+          item.classList.add("tab", "irregular");
+          break;
+        case 30:
+          item.classList.add("caps", "irregular");
+          break;
+        case 42:
+          item.classList.add("shiftR-enter", "irregular");
+          break;
+        case 43:
+          item.classList.add("shift", "irregular");
+          break;
+        case 55:
+          item.classList.add("shiftR-enter", "irregular");
+          break;
+        case 59:
+          item.classList.add("space", "irregular");
+          break;
+        case 29:
+        case 56:
+        case 57:
+        case 58:
+        case 60:
+        case 64:
+          item.classList.add("irregular");
+          break;
+
+        default:
+          item.classList.add("regular-key");
+      }
+    });
+  }
+  keybord.insertAdjacentHTML("beforebegin", "<p class = \"description\">Switch Language Ctrl + Alt</p>");
+  keybord.insertAdjacentHTML("afterend", "<p class = \"description\">Made with Windows</p>");
 }());
 
 const KEY_IRREGULAR = document.querySelectorAll(".irregular");
@@ -91,6 +126,7 @@ document.addEventListener("keydown", (event) => {
     }
   }
 });
+
 document.addEventListener("keyup", (event) => {
   if (event) {
     CODE.forEach((item) => { item !== event.code ? null : document.querySelector(`[code="${event.code}"]`).classList.remove("-focus"); });

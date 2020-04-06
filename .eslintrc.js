@@ -4,6 +4,7 @@ module.exports = {
         "es6": true
     },
     "extends": "eslint:recommended",
+    "extends": ["airbnb", "airbnb/hooks"],
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"

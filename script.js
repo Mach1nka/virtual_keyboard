@@ -58,6 +58,12 @@ const KEY_REGULAR = document.querySelectorAll(".regular-key");
 const TEXTAREA = document.getElementById("textarea");
 let stateOfCaps = false;
 
+function getCursorPosition(textarea) {
+  textarea.focus();
+  return textarea.selectionStart !== false ? textarea.selectionStart : 0;
+}
+
+
 (function () {
   !localStorage.getItem("lang") ? localStorage.setItem("lang", JSON.stringify(ENGLISH_KEYS)) : true;
   let i = 0;
@@ -106,6 +112,18 @@ function changeRegister(state, array) {
   }
 }
 
+function backspace(pos) {
+  const arrayOfSymbols = document.getElementById("textarea").value.split("");
+  arrayOfSymbols.splice(--pos, 1);
+  return TEXTAREA.value = arrayOfSymbols.join("");
+}
+
+function innerText(textarea, pos, str) {
+  const beforeSubStr = textarea.value.substring(0, pos);
+  const afterSubStr = textarea.value.substring(pos, textarea.value.length);
+  return textarea.value = beforeSubStr + str + afterSubStr;
+}
+
 document.addEventListener("keydown", (event) => {
   if (event) {
     CODE.forEach((item) => { item !== event.code ? null : document.querySelector(`[code="${event.code}"]`).classList.add("-focus"); });
@@ -138,7 +156,6 @@ document.addEventListener("keyup", (event) => {
 
 
 document.addEventListener("keydown", (event) => {
-  const arrayOfSymbols = document.getElementById("textarea").value.split("");
   event.preventDefault();
   if (event) {
     CODE.forEach((item) => {
@@ -165,17 +182,16 @@ document.addEventListener("keydown", (event) => {
           return null;
           break;
         case "Enter":
-          TEXTAREA.value += "\n";
+          innerText(TEXTAREA, getCursorPosition(TEXTAREA), "\n");
           break;
         case "Tab":
-          TEXTAREA.value += "  ";
+          innerText(TEXTAREA, getCursorPosition(TEXTAREA), "  ");
           break;
         case "Backspace":
-          arrayOfSymbols.pop();
-          TEXTAREA.value = arrayOfSymbols.join("");
+          backspace(getCursorPosition(TEXTAREA));
           break;
         case "Space":
-          TEXTAREA.value += " ";
+          innerText(TEXTAREA, getCursorPosition(TEXTAREA), " ");
           break;
         case "CapsLock":
           changeRegister(stateOfCaps, JSON.parse(localStorage.lang));
@@ -185,7 +201,7 @@ document.addEventListener("keydown", (event) => {
           localStorage.lang === JSON.stringify(RUSSIAN_KEYS) ? changeSymbols(SHIFT_RUSSIAN_KEYS) : changeSymbols(SHIFT_ENGLISH_KEYS);
           break;
         default:
-          TEXTAREA.value += document.querySelector(`[code="${event.code}"]`).innerText;
+          innerText(TEXTAREA, getCursorPosition(TEXTAREA), document.querySelector(`[code="${event.code}"]`).innerText);
       }
     });
   }
@@ -194,7 +210,6 @@ document.addEventListener("keydown", (event) => {
 
 document.getElementById("keybord").addEventListener("mousedown", (event) => {
   event.target.classList.add("-focus");
-  const arrayOfSymbols = document.getElementById("textarea").value.split("");
   if (event.target.getAttribute("code") == null) {
     return null;
   }
@@ -218,17 +233,16 @@ document.getElementById("keybord").addEventListener("mousedown", (event) => {
       return null;
       break;
     case "Enter":
-      TEXTAREA.value += "\n";
+      innerText(TEXTAREA, getCursorPosition(TEXTAREA), "\n");
       break;
     case "Tab":
-      TEXTAREA.value += "  ";
+      innerText(TEXTAREA, getCursorPosition(TEXTAREA), "  ");
       break;
     case "Backspace":
-      arrayOfSymbols.pop();
-      TEXTAREA.value = arrayOfSymbols.join("");
+      backspace(getCursorPosition(TEXTAREA));
       break;
     case "Space":
-      TEXTAREA.value += " ";
+      innerText(TEXTAREA, getCursorPosition(TEXTAREA), " ");
       break;
     case "CapsLock":
       changeRegister(stateOfCaps, JSON.parse(localStorage.lang));
@@ -238,7 +252,7 @@ document.getElementById("keybord").addEventListener("mousedown", (event) => {
       localStorage.lang === JSON.stringify(RUSSIAN_KEYS) ? changeSymbols(SHIFT_RUSSIAN_KEYS) : changeSymbols(SHIFT_ENGLISH_KEYS);
       break;
     default:
-      TEXTAREA.value += document.querySelector(`[code="${event.target.getAttribute("code")}"]`).innerText;
+      innerText(TEXTAREA, getCursorPosition(TEXTAREA), document.querySelector(`[code="${event.target.getAttribute("code")}"]`).innerText);
   }
 });
 

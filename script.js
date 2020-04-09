@@ -165,22 +165,16 @@ document.addEventListener("keydown", (event) => {
       switch (event.code) {
         case "ControlLeft":
           return null;
-          break;
         case "Delete":
           return null;
-          break;
         case "ControlRight":
           return null;
-          break;
         case "AltRight":
           return null;
-          break;
         case "MetaLeft":
           return null;
-          break;
         case "AltLeft":
           return null;
-          break;
         case "Enter":
           innerText(TEXTAREA, getCursorPosition(TEXTAREA), "\n");
           break;
@@ -216,22 +210,16 @@ document.getElementById("keybord").addEventListener("mousedown", (event) => {
   switch (event.target.getAttribute("code")) {
     case "ControlLeft":
       return null;
-      break;
     case "Delete":
       return null;
-      break;
     case "ControlRight":
       return null;
-      break;
     case "AltRight":
       return null;
-      break;
     case "MetaLeft":
       return null;
-      break;
     case "AltLeft":
       return null;
-      break;
     case "Enter":
       innerText(TEXTAREA, getCursorPosition(TEXTAREA), "\n");
       break;
